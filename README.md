@@ -1,49 +1,82 @@
-# Starlight Starter Kit: Basics
+# 🌟 Elite Blog API - Robust Backend Service
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+[![CI](https://github.com/<username>/blog-api/actions/workflows/ci.yml/badge.svg)](https://github.com/<username>/blog-api/actions)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+[![Fastify](https://img.shields.io/badge/Fastify-5.x-black?style=flat&logo=fastify)](https://www.fastify.io/)
+[![Turso](https://img.shields.io/badge/Turso-SQLite-blue?style=flat&logo=couchbase)](https://turso.tech/)
+[![Vitest](https://img.shields.io/badge/Testing-Vitest-yellow?style=flat&logo=vitest)](https://vitest.dev/)
 
+Esta es una API de nivel empresarial diseñada para la gestión de blogs, construida con un enfoque obsesivo en la **velocidad**, **tipado estricto** y **seguridad**.
+
+---
+
+## 🚀 Puntos Clave de Ingeniería (High-Level)
+
+### 1. Arquitectura "Edge-Ready"
+Utilizamos **Fastify** para un rendimiento inigualable y **Turso (LibSQL)** para una base de datos SQLite distribuida globalmente. El resultado es una latencia mínima sin sacrificar la consistencia de los datos.
+
+### 2. Seguridad de Grado Industrial
+- **Identidad Desacoplada**: Gestión de usuarios vía **Clerk SDK**, eliminando el riesgo de almacenar credenciales localmente.
+- **Autorización Vinculada**: Validación estricta de propiedad (`authorId`) en cada operación de escritura, previniendo escalada de privilegios.
+
+### 3. Calidad de Código y Robustez
+- **Testing Estratégico**: Cobertura integral con tests Unitarios e Integración usando **Vitest** y el patrón **App Factory**.
+- **CI/CD Automatizado**: Pipeline de GitHub Actions que valida tipos, linting y tests en cada Pull Request.
+- **Validación con Zod**: Esquemas de datos compartidos entre la API y el cliente para garantizar contratos de datos inmutables.
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+- **Runtime**: Node.js 20+
+- **Backend**: Fastify v5 (Type Provider Zod)
+- **Base de Datos**: Turso (SQLite Edge)
+- **ORM**: Drizzle ORM (TypeScript-First)
+- **Auth**: Clerk Identity Management
+- **Testing**: Vitest & Supertest
+- **CI/CD**: GitHub Actions
+
+---
+
+## 📖 Documentación Detallada
+
+Para una referencia exhaustiva de endpoints, lógica de servicios y porqués de la arquitectura, consulta:
+👉 [**Documentación Interactiva (Astro Starlight)**](http://localhost:4321) (or run `npm run dev`)
+
+---
+
+## 🔧 Setup y Desarrollo
+
+### Requisitos
+- Node.js v20+
+- Cuenta en Turso y Clerk (Variables de entorno requeridas en `.env`)
+
+### Instalación
+```bash
+npm install
 ```
-pnpm create astro@latest -- --template starlight
+
+### Base de Datos
+```bash
+npm run db:push     # Sincroniza esquema con Turso
+npm run seed        # Pobla la DB con datos iniciales
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+### Testing
+```bash
+npm test            # Corre la suite completa (Unit + Integration)
+npm run test:coverage # Genera reporte de cobertura
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+---
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+## 🤖 CI/CD Flow
+Cualquier cambio en la rama principal debe pasar por nuestro pipeline de CI:
+1. **Lint & Security Check**
+2. **Build Check** (Compilación TS)
+3. **Unit Tests** (Lógica de Servicios)
+4. **Integration Tests** (Contratos de API)
 
-Static assets, like favicons, can be placed in the `public/` directory.
+---
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+> [!NOTE]  
+> Este proyecto forma parte de una arquitectura desacoplada diseñada para alimentar frontends modernos como **Astro**.

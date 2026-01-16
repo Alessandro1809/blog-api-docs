@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&family=Spectral:wght@400;600&display=swap');
+
+:root,
+:root[data-theme='light'] {
+	--sl-font: 'Space Grotesk';
+	--sl-font-mono: 'JetBrains Mono';
+
+	--sl-color-accent: #1f7a74;
+	--sl-color-accent-high: #bfe7e3;
+	--sl-color-accent-low: #0f3b38;
+
+	--sl-color-gray-1: #f8f1e7;
+	--sl-color-gray-2: #e6dac8;
+	--sl-color-gray-3: #b8ab98;
+	--sl-color-gray-4: #887c6c;
+	--sl-color-gray-5: #4d443b;
+	--sl-color-gray-6: #2c2621;
+
+	--sl-color-text: #231f1a;
+	--sl-color-text-accent: #0f3b38;
+	--sl-color-text-invert: #f6f1e9;
+
+	--sl-color-bg: #f6f1e9;
+	--sl-color-bg-nav: #f1eadf;
+	--sl-color-bg-sidebar: #f1eadf;
+	--sl-color-bg-inline-code: #efe3d2;
+	--sl-color-bg-accent: #dff1ee;
+
+	--sl-color-hairline: #e3d9c8;
+	--sl-color-hairline-light: #eee3d2;
+	--sl-color-hairline-shade: #d1c4af;
+
+	--doc-gradient-a: rgba(225, 206, 169, 0.6);
+	--doc-gradient-b: rgba(177, 220, 214, 0.5);
+	--doc-grain: rgba(35, 31, 26, 0.06);
+}
+
+:root[data-theme='dark'] {
+	--sl-color-accent: #7bd4ca;
+	--sl-color-accent-high: #c8efe9;
+	--sl-color-accent-low: #0a2c29;
+
+	--sl-color-gray-1: #f2e9dd;
+	--sl-color-gray-2: #cbbfae;
+	--sl-color-gray-3: #9a8e80;
+	--sl-color-gray-4: #6a6054;
+	--sl-color-gray-5: #3a322b;
+	--sl-color-gray-6: #231e19;
+
+	--sl-color-text: #efe8dd;
+	--sl-color-text-accent: #c8efe9;
+	--sl-color-text-invert: #0d0b09;
+
+	--sl-color-bg: #15120f;
+	--sl-color-bg-nav: #1b1713;
+	--sl-color-bg-sidebar: #1b1713;
+	--sl-color-bg-inline-code: #221c16;
+	--sl-color-bg-accent: #18322f;
+
+	--sl-color-hairline: #2a231c;
+	--sl-color-hairline-light: #201a15;
+	--sl-color-hairline-shade: #0c0907;
+
+	--doc-gradient-a: rgba(60, 46, 28, 0.7);
+	--doc-gradient-b: rgba(25, 72, 67, 0.5);
+	--doc-grain: rgba(245, 236, 220, 0.05);
+}
+
+body {
+	background-color: var(--sl-color-bg);
+	background-image:
+		radial-gradient(1000px 520px at 10% -10%, var(--doc-gradient-a), transparent 55%),
+		radial-gradient(900px 520px at 100% 0%, var(--doc-gradient-b), transparent 60%);
+	position: relative;
+}
+
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	background-image: radial-gradient(var(--doc-grain) 1px, transparent 0);
+	background-size: 12px 12px;
+	opacity: 0.45;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-family: 'Spectral', serif;
+	letter-spacing: -0.02em;
+}
+
+.sl-hero {
+	animation: rise 0.7s ease-out both;
+}
+
+.sl-markdown-content > :is(h2, h3, p, ul, ol, pre, blockquote, .card-grid) {
+	animation: rise 0.6s ease-out both;
+}
+
+@keyframes rise {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sl-hero,
+	.sl-markdown-content > :is(h2, h3, p, ul, ol, pre, blockquote, .card-grid) {
+		animation: none;
+	}
+}
+
+.sl-card {
+	border: 1px solid var(--sl-color-hairline);
+	box-shadow: none;
+}
+
+.sl-card:hover {
+	border-color: var(--sl-color-accent);
+	transform: translateY(-2px);
+	transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sl-card:hover {
+		transform: none;
+		transition: none;
+	}
+}

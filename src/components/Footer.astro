@@ -1,0 +1,47 @@
+---
+import EditLink from 'virtual:starlight/components/EditLink';
+import LastUpdated from 'virtual:starlight/components/LastUpdated';
+import Pagination from 'virtual:starlight/components/Pagination';
+---
+
+<footer class="sl-flex site-footer">
+	<div class="meta sl-flex">
+		<EditLink />
+		<LastUpdated />
+	</div>
+	<Pagination />
+
+	<div class="site-footer__credits sl-flex">
+		<a class="site-footer__link" href="https://github.com/alessandrodiaz/blog-api">GitHub repo</a>
+		<span class="site-footer__line">Built to be audited in minutes.</span>
+	</div>
+</footer>
+
+<style>
+	@layer starlight.core {
+		.site-footer {
+			flex-direction: column;
+			gap: 1.5rem;
+		}
+
+		.site-footer__credits {
+			gap: 0.75rem 2rem;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			margin: 1.5rem 0 2.5rem;
+			font-size: var(--sl-text-sm);
+			color: var(--sl-color-gray-4);
+		}
+
+		.site-footer__link {
+			color: inherit;
+			text-decoration: none;
+			font-weight: 600;
+		}
+
+		.site-footer__link:hover {
+			color: var(--sl-color-accent);
+		}
+	}
+</style>

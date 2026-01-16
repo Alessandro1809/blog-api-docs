@@ -1,0 +1,22 @@
+---
+title: Trust & Quality
+description: Guardrails for correctness, safety, and operational clarity.
+---
+
+This API favors small, verifiable behaviors over sweeping feature lists.
+
+## Contract stability
+
+- Zod schemas validate input and serialize output so the contract is consistent.
+- The runtime path stays short and explicit to reduce hidden side effects.
+
+## Auth boundaries
+
+- Clerk verifies JWTs, and the API never stores passwords.
+- Public reads are open, while writes require valid auth.
+
+## Testing and uptime
+
+- Tests run with Vitest + Supertest to cover request behavior end to end.
+- The `GET /health` endpoint gives a fast readiness signal for deploys.
+- In tests (`NODE_ENV=test`), the server does not auto-start.

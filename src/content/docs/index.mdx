@@ -1,40 +1,75 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
-template: splash # Remove or comment out this line to display the site sidebar on this page.
+title: Blog API
+description: A recruiter-ready backend with a short, explicit runtime path.
+template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
-  image:
-    file: ../../assets/houston.webp
+  tagline: A fast, typed blog API built for real-world delivery.
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: See the runtime path
+      link: /how-it-works/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
+    - text: Run it locally
+      link: /run-it-locally/
+      icon: laptop
       variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
+Purpose-built backend for a blog platform with a focus on speed, correctness, and a clean developer story.
+It is intentionally small, highly typed, and safe to extend.
+
+## How it works
+
+1. `src/server.ts` loads env config and builds a Fastify instance with Zod type providers.
+2. `registerPlugins()` wires CORS, database, auth, and routes under `/api/v1`.
+3. Requests flow: route -> controller -> service -> Drizzle ORM -> Turso.
+4. The server listens on `0.0.0.0:${PORT}` (default `51214`).
+5. In tests (`NODE_ENV=test`), the server does not auto-start.
+
+```
+Client -> /api/v1 -> routes -> controllers -> services -> db (Drizzle -> Turso)
+```
+
+## Why this API runs the way it does
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+	<Card title="Fastify" icon="rocket">
+		Lean request path and explicit plugin registration to keep latency predictable.
 	</Card>
-	<Card title="Change page layout" icon="document">
-		Delete `template: splash` in `src/content/docs/index.mdx` to display a
-		sidebar on this page.
+	<Card title="Clerk" icon="approve-check-circle">
+		Auth is delegated so the API never stores passwords and stays stateless.
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="Zod" icon="list-format">
+		Typed input/output contracts keep validation consistent at every boundary.
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	<Card title="Turso + Drizzle" icon="cloud-download">
+		Edge-friendly SQLite with a type-safe query layer that is safe to evolve.
 	</Card>
 </CardGrid>
+
+## API surface
+
+High-level endpoints and example requests live in the [API surface](/api-surface/) page.
+
+- `GET /api/v1/posts` list posts with query support
+- `GET /api/v1/posts/:slug` fetch a post by slug
+- `POST /api/v1/posts` create a post (auth required)
+- `GET /api/v1/categories` list categories
+- `GET /health` health check
+
+## Trust boundaries
+
+- Typed validation at the edge with Zod
+- Public reads, protected writes with Clerk JWTs
+- Plugin order is explicit to keep startup predictable
+- Tests with Vitest + Supertest
+
+## Run it locally
+
+```bash
+npm install
+npm run dev
+```
+
+See [Run it locally](/run-it-locally/) for env vars, database tasks, and tests.

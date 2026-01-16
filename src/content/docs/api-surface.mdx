@@ -1,0 +1,71 @@
+---
+title: API Surface
+description: High-level endpoints and example requests for the Blog API.
+---
+
+All routes are versioned under `/api/v1`.
+
+## Endpoints
+
+- `GET /api/v1/posts` list posts (supports query via Zod schema)
+- `GET /api/v1/posts/id/:id` get a post by id
+- `GET /api/v1/posts/:slug` get a post by slug
+- `POST /api/v1/posts` create a post (auth required)
+- `PUT /api/v1/posts/:id` update a post (auth required)
+- `DELETE /api/v1/posts/:id` delete a post (auth required)
+- `GET /api/v1/categories` list categories
+- `GET /api/v1/posts/stats/views` view stats
+- `GET /health` health check
+
+## Example requests
+
+List posts:
+
+```bash
+curl "http://localhost:51214/api/v1/posts?page=1&limit=10"
+```
+
+Example response:
+
+```json
+{
+  "data": [
+    {
+      "id": "1",
+      "title": "Why Fastify",
+      "slug": "why-fastify",
+      "excerpt": "A short case for low-latency APIs.",
+      "authorId": "user_123",
+      "createdAt": "2024-01-12T10:05:00.000Z"
+    }
+  ],
+  "meta": { "page": 1, "limit": 10, "total": 42 }
+}
+```
+
+Create post (auth required):
+
+```bash
+curl -X POST "http://localhost:51214/api/v1/posts" \
+  -H "Authorization: Bearer <CLERK_JWT>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Typed APIs that scale",
+    "slug": "typed-apis",
+    "content": "Full post body...",
+    "excerpt": "Why type-safe contracts matter.",
+    "category": "engineering"
+  }'
+```
+
+Example response:
+
+```json
+{
+  "id": "2",
+  "title": "Typed APIs that scale",
+  "slug": "typed-apis",
+  "authorId": "user_123",
+  "createdAt": "2024-01-12T12:30:00.000Z"
+}
+```

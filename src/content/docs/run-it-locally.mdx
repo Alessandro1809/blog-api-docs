@@ -1,0 +1,46 @@
+---
+title: Run It Locally
+description: Local setup, environment variables, and scripts.
+---
+
+## Requirements
+
+- Node 20+
+- Turso (libSQL)
+- Clerk account for JWT verification
+
+## Environment variables
+
+Required:
+
+- `TURSO_DATABASE_URL` Turso database URL
+- `TURSO_AUTH_TOKEN` Turso auth token
+- `CLERK_SECRET_KEY` Clerk secret key for token verification
+
+Optional:
+
+- `PORT` server port (default `51214`)
+- `NODE_ENV` `development` | `production` | `test`
+
+## Start the API
+
+```bash
+npm install
+npm run dev
+```
+
+The server listens on `0.0.0.0:${PORT}` (default `51214`).
+
+## Database tasks
+
+```bash
+npm run db:push
+npm run seed
+```
+
+## Tests
+
+```bash
+npm test
+npm run test:coverage
+```

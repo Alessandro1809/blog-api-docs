@@ -1,0 +1,37 @@
+---
+title: How It Works
+description: Runtime path and architectural choices for the Blog API.
+---
+
+The runtime path is intentionally short and explicit so it is easy to reason about performance and failure modes.
+
+## Runtime path
+
+1. `src/server.ts` loads env config and builds a Fastify instance with Zod type providers.
+2. `registerPlugins()` wires CORS, database, auth, and routes under `/api/v1`.
+3. Requests flow: route -> controller -> service -> Drizzle ORM -> Turso.
+4. The server listens on `0.0.0.0:${PORT}` (default `51214`).
+5. In tests (`NODE_ENV=test`), the server does not auto-start.
+
+```
+Client -> /api/v1 -> routes -> controllers -> services -> db (Drizzle -> Turso)
+```
+
+## Why these choices
+
+### Fastify
+Performance first. Fastify keeps the request path lean and predictable.
+
+### Turso (libSQL)
+Edge-friendly SQLite with low-latency reads at scale.
+
+### Clerk
+Identity is handled outside the API so passwords never touch the service.
+
+### Zod
+Schemas validate input and serialize output consistently, keeping contracts stable.
+
+## Auth boundaries
+
+- Public reads: `GET` endpoints for posts and categories.
+- Protected writes: `POST`, `PUT`, and `DELETE` require a valid Clerk JWT.
